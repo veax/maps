@@ -4,6 +4,7 @@ public class EventTypes {
     // map event types
     public static final String MAP_CLICK = "press";
     public static final String MAP_LONG_CLICK = "longpress";
+    public static final String MAP_TOUCH_MOVING = "touchmoving";
     public static final String MAP_USER_TRACKING_MODE_CHANGE = "usertrackingmodechange";
 
     public static final String REGION_WILL_CHANGE = "regionwillchange";

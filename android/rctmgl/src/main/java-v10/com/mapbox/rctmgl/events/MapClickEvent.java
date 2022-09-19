@@ -38,6 +38,10 @@ public class MapClickEvent extends AbstractEvent {
             return EventKeys.MAP_LONG_CLICK;
         }
 
+        if (eventType.equals(EventTypes.MAP_TOUCH_MOVING)) {
+            return EventKeys.MAP_TOUCH_MOVING;
+        }
+
         return EventKeys.MAP_CLICK;
     }
 

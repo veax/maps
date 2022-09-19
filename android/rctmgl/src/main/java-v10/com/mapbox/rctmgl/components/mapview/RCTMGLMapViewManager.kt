@@ -177,6 +177,7 @@ open class RCTMGLMapViewManager(context: ReactApplicationContext?) :
         return MapBuilder.builder<String, String>()
             .put(EventKeys.MAP_CLICK, "onPress")
             .put(EventKeys.MAP_LONG_CLICK, "onLongPress")
+            .put(EventKeys.MAP_TOUCH_MOVING, "onTouchMoving")
             .put(EventKeys.MAP_ONCHANGE, "onMapChange")
             .put(EventKeys.MAP_ON_LOCATION_CHANGE, "onLocationChange")
             .put(EventKeys.MAP_USER_TRACKING_MODE_CHANGE, "onUserTrackingModeChange")

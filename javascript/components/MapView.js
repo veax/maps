@@ -190,6 +190,11 @@ class MapView extends NativeBridgeComponent(React.Component) {
     onLongPress: PropTypes.func,
 
     /**
+     * Map touch move listener, gets called when a user continously touch and and move the map 
+     */
+    onTouchMoving: PropTypes.func,
+
+    /**
      * <v10 only
      *
      * This event is triggered whenever the currently displayed map region is about to change.
@@ -331,6 +336,7 @@ class MapView extends NativeBridgeComponent(React.Component) {
 
     this._onPress = this._onPress.bind(this);
     this._onLongPress = this._onLongPress.bind(this);
+    this._onTouchMoving = this._onTouchMoving.bind(this);
     this._onChange = this._onChange.bind(this);
     this._onLayout = this._onLayout.bind(this);
 
@@ -656,6 +662,12 @@ class MapView extends NativeBridgeComponent(React.Component) {
     }
   }
 
+  _onTouchMoving(e) {
+    if (isFunction(this.props.onTouchMoving)) {
+      this.props.onTouchMoving(e.nativeEvent.payload);
+    }
+  }
+
   _onRegionWillChange(payload) {
     if (isFunction(this.props.onRegionWillChange)) {
       this.props.onRegionWillChange(payload);
@@ -833,6 +845,7 @@ class MapView extends NativeBridgeComponent(React.Component) {
       ref: (nativeRef) => this._setNativeRef(nativeRef),
       onPress: this._onPress,
       onLongPress: this._onLongPress,
+      onTouchMoving: this._onTouchMoving,
       onMapChange: this._onChange,
       onAndroidCallback: isAndroid() ? this._onAndroidCallback : undefined,
     };

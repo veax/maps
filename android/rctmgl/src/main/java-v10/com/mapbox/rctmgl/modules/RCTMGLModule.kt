@@ -49,6 +49,7 @@ class RCTMGLModule(private val mReactContext: ReactApplicationContext) : ReactCo
         val eventTypes: MutableMap<String, String> = HashMap()
         eventTypes["MapClick"] = EventTypes.MAP_CLICK
         eventTypes["MapLongClick"] = EventTypes.MAP_LONG_CLICK
+        eventTypes["MapTouchMoving"] = EventTypes.MAP_TOUCH_MOVING
         eventTypes["RegionWillChange"] = EventTypes.REGION_WILL_CHANGE
         eventTypes["RegionIsChanging"] = EventTypes.REGION_IS_CHANGING
         eventTypes["RegionDidChange"] = EventTypes.REGION_DID_CHANGE

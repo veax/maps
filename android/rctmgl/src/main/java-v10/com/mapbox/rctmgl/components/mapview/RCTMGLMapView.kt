@@ -101,6 +101,7 @@ open class RCTMGLMapView(private val mContext: Context, var mManager: RCTMGLMapV
                 val gesturesPlugin: GesturesPlugin = this.gestures
                 gesturesPlugin.removeOnMapClickListener(_this)
                 gesturesPlugin.removeOnMapLongClickListener(_this)
+                // TODO : remove touch listener ? (no _this.removeOnTouchListener method)
 
                 mPointAnnotationManager = annotations.createPointAnnotationManager()
                 mPointAnnotationManager?.addClickListener(OnPointAnnotationClickListener { pointAnnotation ->
@@ -149,6 +150,7 @@ open class RCTMGLMapView(private val mContext: Context, var mManager: RCTMGLMapV
                 })
                 gesturesPlugin.addOnMapClickListener(_this)
                 gesturesPlugin.addOnMapLongClickListener(_this)
+                // TODO : set touch listener ? _this.setOnTouchListener(customOnTouchListener) 
 
             }
             return mPointAnnotationManager
@@ -192,6 +194,7 @@ open class RCTMGLMapView(private val mContext: Context, var mManager: RCTMGLMapV
             override fun onMoveEnd(moveGestureDetector: MoveGestureDetector) {}
         })
 
+        _this.setOnTouchListener(customOnTouchListener);
 
         map.subscribe({ event -> Logger.e(LOG_TAG, String.format("Map load failed: %s", event.data.toString())) }, Arrays.asList(MapEvents.MAP_LOADING_ERROR))
     }
@@ -1138,4 +1141,20 @@ open class RCTMGLMapView(private val mContext: Context, var mManager: RCTMGLMapV
     }
 
     // endregion
+
+    private View.OnTouchListener customOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            LatLng latLngTouchCoordinate = mMap.getProjection().fromScreenLocation(new PointF(motionEvent.getX(), motionEvent.getY()));
+            Point screenTouchPoint = Point.fromLngLat(latLngTouchCoordinate.getLongitude(), latLngTouchCoordinate.getLatitude());
+            handleMapTouchMovingEvent(latLngTouchCoordinate, screenTouchPoint);
+            return true;
+        }
+    };
+
+    private fun handleMapTouchMovingEvent(LatLng latLngTouchCoordinate, Point screenTouchPoint) {
+        if (!canHandleEvent(EventTypes.MAP_TOUCH_MOVING)) return;
+        val event = MapClickEvent(_this, latLngTouchCoordinate, screenTouchPoint, EventTypes.MAP_TOUCH_MOVING)
+        mManager.handleEvent(event)
+    }
 }

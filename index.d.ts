@@ -574,6 +574,7 @@ export interface MapViewProps extends ViewProps {
 
   onPress?: (feature: GeoJSON.Feature) => void;
   onLongPress?: (feature: GeoJSON.Feature) => void;
+  onTouchMoving?: (feature: GeoJSON.Feature) => void; 
   onRegionWillChange?: (
     feature: GeoJSON.Feature<GeoJSON.Point, RegionPayload>,
   ) => void;
